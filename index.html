@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="noindex">
+
+		<script>
+		/* ================= 設定區 ================= */
+		// 最晚回來時間（台灣時間，格式：YYYY-MM-DDTHH:mm:ss+08:00）
+		const BACK_AT = "2026-10-15T23:00:00+08:00";
+		// Discord 群組邀請連結
+		const DISCORD_URL = "https://discord.gg/your-invite";
+		// 時間到後是否每 30 秒自動重新整理
+		const AUTO_CHECK = true;
+		/* ========================================== */
+		</script>
+
+		<title>伺服器泡咖啡中 · 晚點見</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap">
+
+		<style>
+		:root {
+			--paper: #f3ede2;
+			--line: #e2d9c8;
+			--ink: #2b2620;
+			--ink-soft: #7a7064;
+			--stamp: #d9482b;
+			--note: #fff3a8;
+			--tape: rgba(255, 255, 255, .55);
+		}
+
+		@media (prefers-color-scheme: dark) {
+			:root {
+			--paper: #1f1d1a;
+			--line: #2c2925;
+			--ink: #ece4d6;
+			--ink-soft: #9a9083;
+			--stamp: #ff6a4a;
+			--note: #3a3523;
+			--tape: rgba(255, 255, 255, .12);
+			}
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		body {
+			display: grid;
+			place-items: center;
+			padding: 32px 16px;
+			font-family: "LXGW WenKai TC", "Kaiti TC", "DFKai-SB", serif;
+			line-height: 1.75;
+			color: var(--ink);
+			background-color: var(--paper);
+			/* 筆記本橫線 */
+			background-image: linear-gradient(var(--line) 1px, transparent 1px);
+			background-size: 100% 34px;
+		}
+
+		.wrap {
+			width: 100%;
+			max-width: 880px;
+			display: grid;
+			grid-template-columns: 1fr 1.1fr;
+			gap: 24px 40px;
+			align-items: center;
+		}
+
+		/* ---- 插圖 ---- */
+		.doodle {
+			width: 100%;
+			max-width: 360px;
+			justify-self: center;
+		}
+
+		.doodle svg {
+			width: 100%;
+			height: auto;
+			display: block;
+			overflow: visible;
+		}
+
+		.sk {
+			fill: none;
+			stroke: var(--ink);
+			stroke-width: 3;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+
+		.fill-paper {
+			fill: var(--paper);
+		}
+
+		.breath {
+			transform-box: fill-box;
+			transform-origin: bottom center;
+			animation: breath 3.2s ease-in-out infinite;
+		}
+
+		@keyframes breath {
+			50% { transform: scaleY(1.035); }
+		}
+
+		.z {
+			font-family: inherit;
+			font-weight: 700;
+			fill: var(--ink-soft);
+			opacity: 0;
+			animation: z 3.6s ease-in infinite;
+		}
+
+		.z2 { animation-delay: 1.2s; }
+		.z3 { animation-delay: 2.4s; }
+
+		@keyframes z {
+			0%   { opacity: 0; transform: translate(0, 0); }
+			20%  { opacity: 1; }
+			100% { opacity: 0; transform: translate(18px, -40px); }
+		}
+
+		.led {
+			animation: led 1.1s steps(2) infinite;
+		}
+
+		.led.b {
+			animation-duration: .7s;
+		}
+
+		@keyframes led {
+			50% { opacity: .15; }
+		}
+
+		.steam {
+			opacity: 0;
+			animation: steam 3s ease-in-out infinite;
+		}
+
+		.steam.s2 { animation-delay: 1s; }
+		.steam.s3 { animation-delay: 2s; }
+
+		@keyframes steam {
+			0%   { opacity: 0; transform: translateY(6px); }
+			40%  { opacity: .8; }
+			100% { opacity: 0; transform: translateY(-16px); }
+		}
+
+		.tail {
+			transform-box: fill-box;
+			transform-origin: 0% 50%;
+			animation: tail 2.6s ease-in-out infinite;
+		}
+
+		@keyframes tail {
+			50% { transform: rotate(-12deg); }
+		}
+
+		/* ---- 文字 ---- */
+		.stamp {
+			display: inline-block;
+			margin-bottom: 14px;
+			padding: 0 10px;
+			border: 2.5px solid var(--stamp);
+			border-radius: 4px;
+			font-size: 1.15rem;
+			font-weight: 700;
+			letter-spacing: .2em;
+			color: var(--stamp);
+			opacity: .9;
+			transform: rotate(-4deg);
+		}
+
+		h1 {
+			margin-bottom: 12px;
+			font-size: clamp(2.4rem, 7vw, 3.4rem);
+			line-height: 1.25;
+		}
+
+		h1 u {
+			text-decoration: none;
+			background: linear-gradient(transparent 62%, var(--note) 62% 92%, transparent 92%);
+		}
+
+		p {
+			font-size: 1.3rem;
+		}
+
+		.muted {
+			color: var(--ink-soft);
+		}
+
+		.back {
+			margin: 22px 0 26px;
+			padding-left: 14px;
+			border-left: 3px solid var(--ink);
+		}
+
+		.back .muted {
+			font-size: 1.15rem;
+		}
+
+		.back .when {
+			font-size: 2.1rem;
+			font-weight: 700;
+		}
+
+		.back .left {
+			font-size: 1.2rem;
+			color: var(--ink-soft);
+		}
+
+		/* ---- 便利貼 ---- */
+		.note {
+			position: relative;
+			display: block;
+			max-width: 360px;
+			padding: 18px 20px 16px;
+			font-size: 1.2rem;
+			color: var(--ink);
+			text-decoration: none;
+			background: var(--note);
+			box-shadow: 2px 6px 14px rgba(0, 0, 0, .1);
+			transform: rotate(1.5deg);
+			transition: transform .2s;
+		}
+
+		.note::before {
+			content: "";
+			position: absolute;
+			top: -10px;
+			left: 50%;
+			width: 84px;
+			height: 22px;
+			background: var(--tape);
+			border-left: 1px dashed rgba(0, 0, 0, .08);
+			border-right: 1px dashed rgba(0, 0, 0, .08);
+			transform: translateX(-50%) rotate(-3deg);
+		}
+
+		.note:hover {
+			transform: rotate(-.5deg) translateY(-3px);
+		}
+
+		.note strong {
+			display: block;
+			font-size: 1.4rem;
+		}
+
+		.note .arrow {
+			display: inline-block;
+			transition: transform .2s;
+		}
+
+		.note:hover .arrow {
+			transform: translateX(4px);
+		}
+
+		footer {
+			grid-column: 1 / -1;
+			margin-top: 16px;
+			font-size: 1.05rem;
+			color: var(--ink-soft);
+			text-align: center;
+		}
+
+		@media (max-width: 640px) {
+			.wrap {
+			grid-template-columns: 1fr;
+			text-align: left;
+			}
+
+			.doodle {
+			max-width: 240px;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			* {
+			animation: none !important;
+			}
+
+			.z {
+			opacity: 1;
+			}
+		}
+		</style>
+	</head>
+
+	<body>
+		<!-- 讓線條有一點手繪抖動 -->
+		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+		<filter id="wobble">
+			<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3"/>
+			<feDisplacementMap in="SourceGraphic" scale="2.6"/>
+		</filter>
+		</svg>
+
+		<main class="wrap">
+		<div class="doodle" aria-hidden="true">
+			<svg viewBox="0 0 300 260">
+			<g filter="url(#wobble)">
+				<!-- 伺服器 -->
+				<rect class="sk fill-paper" x="50" y="140" width="200" height="44" rx="6"/>
+				<rect class="sk fill-paper" x="50" y="184" width="200" height="44" rx="6"/>
+				<path class="sk" d="M70 162h70 M70 206h70" stroke-width="2.4"/>
+				<path class="sk" d="M150 156v12 M158 156v12 M166 156v12 M150 200v12 M158 200v12 M166 200v12" stroke-width="2"/>
+				<circle class="led" cx="220" cy="162" r="4.5" fill="#5fbf6a"/>
+				<circle class="led b" cx="234" cy="162" r="4.5" fill="#f2b33d"/>
+				<circle class="led" cx="220" cy="206" r="4.5" fill="#5fbf6a"/>
+				<circle cx="234" cy="206" r="4.5" fill="var(--stamp)"/>
+
+				<!-- 網路線 -->
+				<path class="sk" d="M250 214 q28 4 26 30" stroke-width="2.4"/>
+
+				<!-- 睡覺的貓 -->
+				<g class="breath">
+				<!-- 身體 -->
+				<path class="sk fill-paper" d="M88 140 C 84 112, 112 92, 150 94 C 186 96, 214 112, 212 140 Z"/>
+				<!-- 頭 -->
+				<path class="sk fill-paper" d="M84 140 C 76 120, 86 104, 104 104 C 120 104, 130 118, 126 140 Z"/>
+				<path class="sk fill-paper" d="M88 112 L 86 92 L 100 104"/>
+				<path class="sk fill-paper" d="M110 104 L 120 90 L 122 112"/>
+				<!-- 閉眼 -->
+				<path class="sk" d="M94 124 q4 4 8 0 M110 124 q4 4 8 0" stroke-width="2.4"/>
+				<path class="sk" d="M104 132 q2 2 4 0" stroke-width="2"/>
+				<!-- 斑紋 -->
+				<path class="sk" d="M160 100 q4 10 0 18 M176 104 q4 9 0 16" stroke-width="2.2"/>
+				<!-- 前爪 -->
+				<path class="sk fill-paper" d="M120 140 q8 -8 20 0"/>
+				</g>
+				<path class="sk tail" d="M210 134 q30 -2 30 -26 q0 -12 -10 -12"/>
+
+				<!-- 咖啡杯 -->
+				<path class="sk fill-paper" d="M12 196 h28 l-3 30 q-1 3 -4 3 h-14 q-3 0 -4 -3 z"/>
+				<path class="sk" d="M12 203 q-9 1 -8 9 q1 7 9 6" stroke-width="2.6"/>
+				<path d="M15 202 h22" stroke="#8a5a3c" stroke-width="3" stroke-linecap="round"/>
+			</g>
+
+			<!-- 蒸氣 -->
+			<path class="sk steam s1" d="M20 188 q-4 -6 0 -12 q4 -6 0 -12" stroke-width="2.2"/>
+			<path class="sk steam s2" d="M27 186 q-4 -6 0 -12 q4 -6 0 -12" stroke-width="2.2"/>
+			<path class="sk steam s3" d="M34 188 q-4 -6 0 -12 q4 -6 0 -12" stroke-width="2.2"/>
+
+			<!-- zzz -->
+			<text class="z z1" x="70" y="96" font-size="18">z</text>
+			<text class="z z2" x="78" y="86" font-size="22">z</text>
+			<text class="z z3" x="64" y="78" font-size="26">Z</text>
+			</svg>
+		</div>
+
+		<section>
+			<span class="stamp">維護中</span>
+			<h1>伺服器去<u>泡咖啡</u>了</h1>
+			<p>
+			它說最近跑太多程式，想磨個豆子、慢慢手沖一杯再回來上班。<br>
+			貓本來負責看水壺，結果先睡著了。<br>
+			<span class="muted">資料都乖乖待在原地，只是暫時打不開。</span>
+			</p>
+
+			<div class="back" aria-live="polite">
+			<div class="muted">最晚這個時間回來</div>
+			<div class="when" id="when">—</div>
+			<div class="left" id="left"></div>
+			</div>
+
+			<a class="note" id="discord" href="#" target="_blank" rel="noopener noreferrer">
+			<strong>等不及的話</strong>
+			來 Discord 群組坐坐，咖啡泡到哪會在那邊報告 <span class="arrow">→</span>
+			</a>
+		</section>
+
+		<footer id="foot">咖啡喝完頁面會自己重新整理，不用一直按 F5</footer>
+		</main>
+
+		<script>
+		const backAt = new Date(BACK_AT);
+		document.getElementById("discord").href = DISCORD_URL;
+
+		const tw = (d, o) => d.toLocaleString("zh-TW", { timeZone: "Asia/Taipei", hour12: false, ...o });
+		const ymd = { year: "numeric", month: "numeric", day: "numeric" };
+
+		const sameDay = tw(new Date(), ymd) === tw(backAt, ymd);
+		document.getElementById("when").textContent = sameDay
+			? "今天 " + tw(backAt, { hour: "2-digit", minute: "2-digit" })
+			: tw(backAt, { month: "long", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit" });
+
+		function update() {
+			const el = document.getElementById("left");
+			const mins = Math.ceil((backAt - Date.now()) / 60000);
+
+			if (mins <= 0) {
+			el.textContent = "最後一口了，再等它一下";
+			return;
+			}
+
+			const h = Math.floor(mins / 60);
+			const m = mins % 60;
+			el.textContent = "水還在燒，大概還要 " + (h ? h + " 小時 " : "") + (m ? m + " 分鐘" : "");
+		}
+
+		update();
+		setInterval(update, 30000);
+
+		if (AUTO_CHECK) {
+			setInterval(() => {
+			if (Date.now() >= backAt) location.reload();
+			}, 30000);
+		} else {
+			document.getElementById("foot").textContent = "";
+		}
+		</script>
+	</body>
+</html>
